@@ -38,6 +38,9 @@ const submit = () => {
         </div>
 
         <form @submit.prevent="submit">
+            <div class="text-gray-400 font-bold text-xl mb-4">
+                Iniciar Sesión
+            </div>
             <div>
                 <InputLabel for="email" value="Email" />
 
@@ -69,14 +72,14 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
 
-            <div class="block mt-4">
+            <!-- <div class="block mt-4">
                 <label class="flex items-center">
                     <Checkbox name="remember" v-model:checked="form.remember" />
                     <span class="ml-2 text-sm text-gray-600">Remember me</span>
                 </label>
-            </div>
+            </div> -->
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="mt-4">
                 <Link
                     v-if="canResetPassword"
                     :href="route('password.request')"
@@ -85,7 +88,7 @@ const submit = () => {
                     Forgot your password?
                 </Link>
 
-                <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <PrimaryButton class="justify-center w-full" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Log in
                 </PrimaryButton>
             </div>

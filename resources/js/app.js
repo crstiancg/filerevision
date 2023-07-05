@@ -1,5 +1,7 @@
 import './bootstrap';
 import '../css/app.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+// import 'sweetalert2/src/sweetalert2.scss'
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';

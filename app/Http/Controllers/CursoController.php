@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Curso;
+use App\Models\Carrera;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CursoController extends Controller
 {
@@ -12,7 +14,11 @@ class CursoController extends Controller
      */
     public function index()
     {
-        //
+        $cursos = Curso::with('carrera','user')->get();
+        $carre = Carrera::all();
+
+        // dd($cursos);
+        return Inertia::render('Cursos/Index',['cursos'=>$cursos,'carreras'=>$carre]);
     }
 
     /**
@@ -20,7 +26,7 @@ class CursoController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -28,7 +34,15 @@ class CursoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Curso::create([
+            'nombre'=>$request->nombre,
+            'estado'=>$request->estado,
+            'descripcion' =>$request->descripcion,
+            'user_id' => auth()->user()->id,
+            'carrera_id' => $request->carrera_id,
+            ]);
+
+        return redirect('cursos');
     }
 
     /**
@@ -52,7 +66,15 @@ class CursoController extends Controller
      */
     public function update(Request $request, Curso $curso)
     {
-        //
+        $curso->update([
+            'nombre'=>$request->nombre,
+            'estado'=>$request->estado,
+            'descripcion' =>$request->descripcion,
+            'user_id' => auth()->user()->id,
+            'carrera_id' => $request->carrera_id,
+            ]);
+
+        return redirect('cursos');
     }
 
     /**
@@ -60,6 +82,7 @@ class CursoController extends Controller
      */
     public function destroy(Curso $curso)
     {
-        //
+        $curso->delete();
+        return redirect('cursos');
     }
 }

@@ -30,4 +30,11 @@ class Curso extends Model
         return $this->belongsToMany(User::class, 'matriculas',  'curso_id','user_id')
         ->using(Matricula::class);
     }
+
+    public static $rules=[
+        'nombre' => 'required',
+        'estado' => 'required',
+        'descripcion'=>'required',
+        'carrera_id'=>'required'
+    ];
 }

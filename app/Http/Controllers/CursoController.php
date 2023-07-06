@@ -14,19 +14,22 @@ class CursoController extends Controller
      */
     public function index()
     {
-        $cursos = Curso::with('carrera','user')->get();
+        $usuario = auth()->user()->name;
+        $cursos = Curso::with('carrera','user')->where('user_id','=',auth()->user()->id)->get();
+        // dd($usuario);
         $carre = Carrera::all();
 
         // dd($cursos);
-        return Inertia::render('Cursos/Index',['cursos'=>$cursos,'carreras'=>$carre]);
+        return Inertia::render('Cursos/Index',['cursos'=>$cursos,'carreras'=>$carre,'usuario'=>$usuario]);
     }
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        
+        //
     }
 
     /**
@@ -34,6 +37,7 @@ class CursoController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate(Curso::$rules);
         Curso::create([
             'nombre'=>$request->nombre,
             'estado'=>$request->estado,
@@ -66,6 +70,7 @@ class CursoController extends Controller
      */
     public function update(Request $request, Curso $curso)
     {
+        $request->validate(Curso::$rules);
         $curso->update([
             'nombre'=>$request->nombre,
             'estado'=>$request->estado,

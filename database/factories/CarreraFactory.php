@@ -17,7 +17,7 @@ class CarreraFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre' => 'Escuela Profesional '.fake()->company(),
+            'name' => 'Escuela Profesional '.fake()->company(),
         ];
     }
 }

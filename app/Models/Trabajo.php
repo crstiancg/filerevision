@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Trabajo extends Model
 {
     use HasFactory;
+    protected $fillable = ['titulo','descripcion','curso_id'];
 
     public function curso()
     {
@@ -20,3 +21,5 @@ class Trabajo extends Model
         ->using(Tarea::class);
     }
 }
+
+

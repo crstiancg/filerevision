@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Curso>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Trabajo>
  */
-class CursoFactory extends Factory
+class TrabajoFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,11 +17,9 @@ class CursoFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre' => 'Curso '.fake()->colorName(),
-            'estado' => 'activo',
+            'titulo' => 'Curso '.fake()->colorName(),
             'descripcion' => fake()->text(),
-            'user_id' => fake()->numberBetween(1,3),
-            'carrera_id'=> fake()->numberBetween(1,25),
+            'curso_id' => fake()->numberBetween(1,4),
         ];
     }
 }

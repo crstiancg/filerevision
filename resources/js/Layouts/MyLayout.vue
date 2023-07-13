@@ -3,13 +3,16 @@ import { ref } from 'vue';
 import MySidebarNavLink from '@/Components/MyComponents/MySidebarNavLink.vue';
 import MyNavbarNavLink from '@/Components/MyComponents/MyNavbarNavLink.vue';
 import { Link } from '@inertiajs/vue3';
-const abrirOpUsua = ref(false);
+
 const verSidebar = ref(false);
+const verNavbar = ref(true);
+
+const abrirOpUsua = ref(false);
 const DesplegarRPU = ref(false);
 const DesplegarOps = ref(false);
 const desple_Nav = ref(false);
 const doubledropdown = ref(false);
-const navbarcolla = ref(true);
+
 </script>
 
 <template>
@@ -25,14 +28,14 @@ const navbarcolla = ref(true);
                 <img src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Logo_UNAP.png" class="h-8 mr-3" alt="UNAP Logo" />
                 <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Trabajos</span>
             </a>
-            <button @click="navbarcolla=!navbarcolla" data-collapse-toggle="navbar-multi-level" type="button" class="inline-flex items-center p-2 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-multi-level" aria-expanded="true">
+            <button @click="verNavbar=!verNavbar" data-collapse-toggle="navbar-multi-level" type="button" class="inline-flex items-center p-2 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-multi-level" aria-expanded="true">
                 <span class="sr-only">Open main menu</span>
                 <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
                 </svg>
             </button>
             
-            <div :class="{hidden:navbarcolla}" class="w-full md:block md:w-auto" id="navbar-multi-level">
+            <div :class="{hidden:verNavbar}" class="w-full md:block md:w-auto" id="navbar-multi-level">
                 
                 <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-800 dark:border-gray-700">
                     <li>

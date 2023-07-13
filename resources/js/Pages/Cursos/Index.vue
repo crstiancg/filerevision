@@ -41,7 +41,7 @@ const ok = (msj)=>{
     closeModal();
     Swal.fire({
         title:msj,icon:'success',
-        timer: 1500, // Duración del mensaje en milisegundos (3 segundos)
+        timer: 3000, // Duración del mensaje en milisegundos (3 segundos)
         timerProgressBar: true, // Muestra una barra de progreso durante la duración del mensaje
         showConfirmButton: false // No muestra el botón de confirmación
     });
@@ -55,6 +55,7 @@ const openModal = (op,curso)=>{
         title.value = 'Crear Curso';
     }else{
         title.value = 'Editar Curso';
+        // generar un bucle     ***********************************
         id.value = curso.id;
         form.nombre = curso.nombre;
         form.descripcion = curso.descripcion;
@@ -247,11 +248,10 @@ const deleteCur = (id,name) =>{
                         <Modal :show="modal" @close="closeModal">
                             <h2 class="p-3 text-lg font.medium text-hray-900 bg-gray-800 text-white">{{ title }}</h2>
                             <div class="grid justify-center">
+                                <!-- stilos en columnas, por componentes -->
                                 <div class="p-3 mt-2">
                                     <InputLabel for="name" value="Nombre: "></InputLabel>
-                                    <TextInput id="name" ref="nameInput" 
-                                    v-model="form.nombre" type="text" class="mt-1 block w-3/4"
-                                    placeholder="Name"></TextInput>
+                                    <TextInput id="name" ref="nameInput" v-model="form.nombre" type="text" class="mt-1 block w-3/4" placeholder="Name"></TextInput>
                                     <InputError :message="form.errors.nombre" class="mt-2"></InputError>
                                 </div>
                                 <div class="p-3 mt-2">

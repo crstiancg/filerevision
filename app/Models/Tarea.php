@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class Tarea extends Pivot
 {
     use HasFactory;
+    protected $fillable = ['titulo','descripcion','curso_id'];
 
     protected $table =  'tareas';
 

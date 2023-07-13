@@ -12,7 +12,8 @@ class TrabajoController extends Controller
      */
     public function index()
     {
-        //
+        $trabajos = Trabajo::with('cursos')->get();
+        dd($trabajos);
     }
 
     /**

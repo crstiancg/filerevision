@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Curso;
 use App\Models\Trabajo;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Inertia\Inertia;
 
 class TrabajoController extends Controller
 {
@@ -12,8 +16,10 @@ class TrabajoController extends Controller
      */
     public function index()
     {
-        $trabajos = Trabajo::with('cursos')->get();
-        dd($trabajos);
+        $cursos = Curso::with('carrera','user')->where('user_id','=',auth()->user()->id)->get();
+        $trabajos = Trabajo::with('curso')->get();
+        // dd($trabajos);
+        return Inertia::render('Trabajos/Index',['trabajos'=>$trabajos,'cursos'=>$cursos]);
     }
 
     /**
@@ -21,7 +27,7 @@ class TrabajoController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -29,7 +35,14 @@ class TrabajoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(Trabajo::$rules);
+        Trabajo::create([
+            'titulo'=>$request->titulo,
+            'descripcion' =>$request->descripcion,
+            'curso_id' => $request->curso_id,
+            ]);
+
+        return redirect('trabajos');
     }
 
     /**
@@ -53,7 +66,14 @@ class TrabajoController extends Controller
      */
     public function update(Request $request, Trabajo $trabajo)
     {
-        //
+        $request->validate(Trabajo::$rules);
+        $trabajo->update([
+            'titulo'=>$request->titulo,
+            'descripcion' =>$request->descripcion,
+            'curso_id' => $request->curso_id,
+            ]);
+
+        return redirect('trabajos');
     }
 
     /**
@@ -61,6 +81,7 @@ class TrabajoController extends Controller
      */
     public function destroy(Trabajo $trabajo)
     {
-        //
+        $trabajo->delete();
+        return redirect('trabajos');
     }
 }

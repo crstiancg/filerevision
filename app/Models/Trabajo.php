@@ -20,6 +20,12 @@ class Trabajo extends Model
         return $this->belongsToMany(Matricula::class, 'tareas','trabajo_id','matricula_id')
         ->using(Tarea::class);
     }
+
+    public static $rules=[
+        'titulo' => 'required',
+        'descripcion'=>'required',
+        'curso_id'=>'required'
+    ];
 }
 
 

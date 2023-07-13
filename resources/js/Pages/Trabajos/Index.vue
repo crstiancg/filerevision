@@ -17,18 +17,16 @@ const operation = ref(1);
 const id = ref();
 
 const props = defineProps({
-    cursos: {
+    trabajos: {
         type:Object,
     },
-    carreras:{type:Object},
-    usuario:{type:String},
+    cursos:{type:Object},
 });
 
 const form = useForm({
-    nombre:'',
+    titulo:'',
     descripcion:'',
-    estado:'',
-    carrera_id:''
+    curso_id:''
 });
 
 const ok = (msj)=>{
@@ -42,20 +40,19 @@ const ok = (msj)=>{
     });
 }
 
-const openModal = (op,curso)=>{
+const openModal = (op,trabajo)=>{
     modal.value = true;
     // nextTick( () => nameInput.value.focus());
     operation.value = op;
     if(op==1){
-        title.value = 'Crear Curso';
+        title.value = 'Crear Trabajo';
     }else{
-        title.value = 'Editar Curso';
+        title.value = 'Editar Trabajo';
         // generar un bucle     ***********************************
-        id.value = curso.id;
-        form.nombre = curso.nombre;
-        form.descripcion = curso.descripcion;
-        form.estado = curso.estado;
-        form.carrera_id = curso.carrera.id;
+        id.value = trabajo.id;
+        form.titulo = trabajo.titulo;
+        form.descripcion = trabajo.descripcion;
+        form.curso_id = trabajo.curso.id;
     }
 };
 const closeModal = ()=>{
@@ -66,30 +63,13 @@ const save = () =>{
     if(operation.value == 1){
         // form.post(route('cursos.store'))
         // closeModal();
-        form.post(route('cursos.store'),{
-            onSuccess: ()=>{ok('Curso Creado')}
+        form.post(route('trabajos.store'),{
+            onSuccess: ()=>{ok('Trabajo Creado')}
         });
     }else{
-        form.put(route('cursos.update',id.value),{
-            onSuccess: ()=>{ok('Curso Actualizado')}
+        form.put(route('trabajos.update',id.value),{
+            onSuccess: ()=>{ok('Trabajo Actualizado')}
         });
-        // const alerta = Swal.mixin({
-        //     buttonsStyling:true
-        // });
-        // alerta.fire({
-        //     title: '¿Esta seguro de editar el campo?',
-        //     iconHtml: '<i class="fas fa-question"></i>',
-        //     showCancelButton:true,
-        //     confirmButtonText: '<i class="fa-solid fa-check"></i> Si, Editar.',
-        //     cancelButtonText: '<i class="fa-solid fa-ban"></i> Cancelar',
-        // }).then((result)=>{
-        //     if(result.isConfirmed){
-        //         // console.log(id.value);
-        //         form.put(route('employees.update',id.value),{
-        //             onSuccess: ()=>{ok('Empleado Actualizado')}
-        //         });
-        //     }
-        // });
         closeModal();
     }
 };
@@ -117,17 +97,16 @@ const deleteCur = (id,name) =>{
 </script>
 
 <template>
-    <Head title="Cursos" />
+    <Head title="Trabajos" />
 
     <MyLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Cursos</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Trabajos</h2>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="py-2">Docente: {{ usuario }}</div>
                     <div class="py-2">
                         <!-- tabla de datos -->
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -166,16 +145,16 @@ const deleteCur = (id,name) =>{
                                             id
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Nombre
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Estado
+                                            Titulo
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             Descripción
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Carrera
+                                            ID Curso
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Curso
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             Action
@@ -183,7 +162,7 @@ const deleteCur = (id,name) =>{
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="cur,i in cursos" :key="cur.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <tr v-for="tra,i in trabajos" :key="tra.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                         <td class="w-4 p-4">
                                             <div class="flex items-center">
                                                 <input id="checkbox-table-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -191,26 +170,26 @@ const deleteCur = (id,name) =>{
                                             </div>
                                         </td>
                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{ cur.id }}
+                                            {{ tra.id }}
                                         </th>
                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{ cur.nombre }}
+                                            {{ tra.titulo }}
                                         </th>
                                         <td class="px-6 py-4">
-                                            {{ cur.estado }}
+                                            {{ tra.descripcion }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ cur.descripcion }}
+                                            {{ tra.curso_id }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ cur.carrera.nombre }}
+                                            {{ tra.curso.nombre }}
                                         </td>
                                         <td class="px-6 py-4">
                                             <div class="flex">
-                                                <button @click="openModal(0,cur)" type="button" class="focus:outline-none mr-1 text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm py-2 px-3 dark:focus:ring-yellow-900">
+                                                <button @click="openModal(0,tra)" type="button" class="focus:outline-none mr-1 text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm py-2 px-3 dark:focus:ring-yellow-900">
                                                     <i class="fa-solid fa-edit"></i>
                                                 </button>
-                                                <button @click="deleteCur(cur.id,cur.nombre)" type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm py-2 px-3 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                                                <button @click="deleteCur(tra.id,tra.nombre)" type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm py-2 px-3 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
                                             </div>
@@ -223,12 +202,8 @@ const deleteCur = (id,name) =>{
                         <Modal :show="modal" @close="closeModal">
                             <h2 class="p-3 text-lg font.medium text-hray-900 bg-gray-800 text-white">{{ title }}</h2>
                             <div class="grid justify-center">
-                                <!-- stilos en columnas, por componentes -->
                                 <div class="p-3 mt-2">
-                                    <Input label="Nombre" type="text" v-model="form.nombre" :error="form.errors.nombre"></Input>
-                                </div>
-                                <div class="p-3 mt-2">
-                                    <Input label="Estado" type="text" v-model="form.estado" :error="form.errors.estado"></Input>
+                                    <Input label="Titulo" type="text" v-model="form.titulo" :error="form.errors.titulo"></Input>
                                 </div>
                                 <div class="p-3 mt-2">
                                     <Input label="Descripción" type="text" v-model="form.descripcion" :error="form.errors.descripcion"></Input>
@@ -236,9 +211,9 @@ const deleteCur = (id,name) =>{
                                 <div class="p-3">
                                     <InputLabel for="carre" value="Carreras:"></InputLabel>
                                     <MySelectInput id="carre" 
-                                    v-model="form.carrera_id" :options="carreras" class="mt-1 block w-3/4"
-                                    placeholder="Telefono"></MySelectInput>
-                                    <InputError :message="form.errors.carrera_id" class="mt-2"></InputError>
+                                    v-model="form.curso_id" :options="cursos" class="mt-1 block w-3/4"
+                                    placeholder="Cursos"></MySelectInput>
+                                    <InputError :message="form.errors.curso_id" class="mt-2"></InputError>
                                 </div>
                             </div>
                             <div class="flex justify-center">

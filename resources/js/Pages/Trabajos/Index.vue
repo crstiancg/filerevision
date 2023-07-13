@@ -5,7 +5,6 @@ import Modal from '@/Components/Modal.vue';
 import { ref } from 'vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import TextInput from '@/Components/TextInput.vue';
 import MySelectInput from '@/Components/MyComponents/MySelectInput.vue'
 import Input from '@/Components/MyComponents/Input.vue';
 

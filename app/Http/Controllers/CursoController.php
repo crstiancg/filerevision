@@ -39,7 +39,7 @@ class CursoController extends Controller
     {
         $request->validate(Curso::$rules);
         Curso::create([
-            'nombre'=>$request->nombre,
+            'name'=>$request->nombre,
             'estado'=>$request->estado,
             'descripcion' =>$request->descripcion,
             'user_id' => auth()->user()->id,
@@ -72,7 +72,7 @@ class CursoController extends Controller
     {
         $request->validate(Curso::$rules);
         $curso->update([
-            'nombre'=>$request->nombre,
+            'name'=>$request->nombre,
             'estado'=>$request->estado,
             'descripcion' =>$request->descripcion,
             'user_id' => auth()->user()->id,

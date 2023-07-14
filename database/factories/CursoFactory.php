@@ -17,7 +17,7 @@ class CursoFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre' => 'Curso '.fake()->colorName(),
+            'name' => 'Curso '.fake()->colorName(),
             'estado' => 'activo',
             'descripcion' => fake()->text(),
             'user_id' => fake()->numberBetween(1,3),

@@ -16,16 +16,14 @@ const operation = ref(1);
 const id = ref();
 
 const props = defineProps({
-    trabajos: {
-        type:Object,
-    },
+    matriculas: {type:Object,},
     cursos:{type:Object},
+    users:{type:Object},
 });
 
 const form = useForm({
-    titulo:'',
-    descripcion:'',
-    curso_id:''
+    curso_id:'',
+    user_id:'',
 });
 
 const ok = (msj)=>{
@@ -39,19 +37,18 @@ const ok = (msj)=>{
     });
 }
 
-const openModal = (op,trabajo)=>{
+const openModal = (op,matricula)=>{
     modal.value = true;
     // nextTick( () => nameInput.value.focus());
     operation.value = op;
     if(op==1){
-        title.value = 'Crear Trabajo';
+        title.value = 'Crear Matricula';
     }else{
-        title.value = 'Editar Trabajo';
+        title.value = 'Editar Matricula';
         // generar un bucle     ***********************************
-        id.value = trabajo.id;
-        form.titulo = trabajo.titulo;
-        form.descripcion = trabajo.descripcion;
-        form.curso_id = trabajo.curso.id;
+        id.value = matricula.id;
+        form.curso_id = matricula.curso.id;
+        form.user_id = matricula.user.id;
     }
 };
 const closeModal = ()=>{
@@ -62,24 +59,24 @@ const save = () =>{
     if(operation.value == 1){
         // form.post(route('cursos.store'))
         // closeModal();
-        form.post(route('trabajos.store'),{
-            onSuccess: ()=>{ok('Trabajo Creado')}
+        form.post(route('matriculas.store'),{
+            onSuccess: ()=>{ok('Matricula Creado')}
         });
     }else{
-        form.put(route('trabajos.update',id.value),{
-            onSuccess: ()=>{ok('Trabajo Actualizado')}
+        form.put(route('matriculas.update',id.value),{
+            onSuccess: ()=>{ok('Matricula Actualizado')}
         });
         closeModal();
     }
 };
 
-const deleteCur = (id,name) =>{
+const deleteCur = (id) =>{
     // form.delete(route('cursos.destroy',id));
     const alerta = Swal.mixin({
         buttonsStyling:true
     });
     alerta.fire({
-        title: 'Esta seguro de eliminar '+name+' ?',
+        title: 'Esta seguro de eliminar ?',
         // iconHtml: '<i class="fas fa-question"></i>',
         icon: 'question',
         showCancelButton:true,
@@ -87,7 +84,7 @@ const deleteCur = (id,name) =>{
         cancelButtonText: '<i class="fa-solid fa-ban"></i> Cancelar',
     }).then((result)=>{
         if(result.isConfirmed){
-            form.delete(route('trabajos.destroy',id),{
+            form.delete(route('matriculas.destroy',id),{
                 onSuccess: ()=>{ok('Curso eliminado')}
             });
         }
@@ -96,11 +93,11 @@ const deleteCur = (id,name) =>{
 </script>
 
 <template>
-    <Head title="Trabajos" />
+    <Head title="Matriculas" />
 
     <MyLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Trabajos</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Matriculas</h2>
         </template>
 
         <div class="py-12">
@@ -144,10 +141,10 @@ const deleteCur = (id,name) =>{
                                             id
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Titulo
+                                            ID Usuario
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Descripción
+                                            Usuario
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             ID Curso
@@ -161,8 +158,8 @@ const deleteCur = (id,name) =>{
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="tra,i in trabajos" :key="tra.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <template v-if="$page.props.auth.user.id === tra.curso.user_id">
+                                    <tr v-for="mat,i in matriculas" :key="mat.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <!-- <template v-if="$page.props.auth.user.id === tra.curso.user_id"> -->
                                             <td class="w-4 p-4">
                                                 <div class="flex items-center">
                                                     <input id="checkbox-table-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -170,31 +167,31 @@ const deleteCur = (id,name) =>{
                                                 </div>
                                             </td>
                                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                {{ tra.id }}
+                                                {{ mat.id }}
                                             </th>
                                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                {{ tra.titulo }}
+                                                {{ mat.user_id }}
                                             </th>
                                             <td class="px-6 py-4">
-                                                {{ tra.descripcion }}
+                                                {{ mat.user.name }}
                                             </td>
                                             <td class="px-6 py-4">
-                                                {{ tra.curso_id }}
+                                                {{ mat.curso_id }}
                                             </td>
                                             <td class="px-6 py-4">
-                                                {{ tra.curso.name }}
+                                                {{ mat.curso.name }}
                                             </td>
                                             <td class="px-6 py-4">
                                                 <div class="flex">
-                                                    <button @click="openModal(0,tra)" type="button" class="focus:outline-none mr-1 text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm py-2 px-3 dark:focus:ring-yellow-900">
+                                                    <button @click="openModal(0,mat)" type="button" class="focus:outline-none mr-1 text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm py-2 px-3 dark:focus:ring-yellow-900">
                                                         <i class="fa-solid fa-edit"></i>
                                                     </button>
-                                                    <button @click="deleteCur(tra.id,tra.titulo)" type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm py-2 px-3 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                                                    <button @click="deleteCur(mat.id)" type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm py-2 px-3 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                                                         <i class="fa-solid fa-trash"></i>
                                                     </button>
                                                 </div>
                                             </td>
-                                        </template>
+                                        <!-- </template> -->
                                     </tr>
                                 </tbody>
                             </table>
@@ -203,15 +200,16 @@ const deleteCur = (id,name) =>{
                         <Modal :show="modal" @close="closeModal">
                             <h2 class="p-3 text-lg font.medium text-hray-900 bg-gray-800 text-white">{{ title }}</h2>
                             <div class="grid justify-center">
-                                <div class="p-3 mt-2">
-                                    <Input label="Titulo" type="text" v-model="form.titulo" :error="form.errors.titulo"></Input>
-                                </div>
-                                <div class="p-3 mt-2">
-                                    <Input label="Descripción" type="text" v-model="form.descripcion" :error="form.errors.descripcion"></Input>
+                                <div class="p-3">
+                                    <InputLabel for="usu" value="Estudiantes:"></InputLabel>
+                                    <MySelectInput id="usu" 
+                                    v-model="form.user_id" :options="users" class="mt-1 block w-3/4"
+                                    placeholder="Cursos"></MySelectInput>
+                                    <InputError :message="form.errors.user_id" class="mt-2"></InputError>
                                 </div>
                                 <div class="p-3">
-                                    <InputLabel for="carre" value="Cursos:"></InputLabel>
-                                    <MySelectInput id="carre" 
+                                    <InputLabel for="cur" value="Cursos:"></InputLabel>
+                                    <MySelectInput id="cur" 
                                     v-model="form.curso_id" :options="cursos" class="mt-1 block w-3/4"
                                     placeholder="Cursos"></MySelectInput>
                                     <InputError :message="form.errors.curso_id" class="mt-2"></InputError>

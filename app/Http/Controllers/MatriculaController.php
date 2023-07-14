@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Matricula;
+use App\Models\User;
+use App\Models\Curso;
 use Illuminate\Http\Request;
+
+use Inertia\Inertia;
 
 class MatriculaController extends Controller
 {
@@ -12,7 +16,13 @@ class MatriculaController extends Controller
      */
     public function index()
     {
-        //
+        $matriculas = Matricula::with('user','curso')->get();
+        $cursos = Curso::all();
+        $usuarios = User::all();
+
+        // dd($usuarios);
+
+        return Inertia::render('Matriculas/Index',['matriculas'=>$matriculas,'cursos'=>$cursos,'users'=>$usuarios]);
     }
 
     /**
@@ -28,7 +38,13 @@ class MatriculaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(Matricula::$rules);
+        Matricula::create([
+            'user_id' => $request->user_id,
+            'curso_id' => $request->curso_id,
+            ]);
+
+        return redirect('matriculas');
     }
 
     /**
@@ -52,7 +68,13 @@ class MatriculaController extends Controller
      */
     public function update(Request $request, Matricula $matricula)
     {
-        //
+        $request->validate(Matricula::$rules);
+        $matricula->update([
+            'user_id' => $request->user_id,
+            'curso_id' => $request->curso_id,
+            ]);
+
+        return redirect('matriculas');
     }
 
     /**
@@ -60,6 +82,7 @@ class MatriculaController extends Controller
      */
     public function destroy(Matricula $matricula)
     {
-        //
+        $matricula->delete();
+        return redirect('matriculas');
     }
 }

@@ -33,7 +33,7 @@ defineExpose({ focus: () => input.value.focus() });
             Seleccione
         </option>
         <option v-for="op in options" :key="op.i" :value="op.id">
-            {{ op.nombre }}
+            {{ op.name }}
         </option>
     </select>
 

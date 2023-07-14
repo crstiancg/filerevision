@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\ProviderController;
 use App\Http\Controllers\CursoController;
+use App\Http\Controllers\MatriculaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrabajoController;
 use App\Models\User;
@@ -42,6 +43,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('cursos', CursoController::class);
     Route::resource('trabajos', TrabajoController::class);
+    Route::resource('matriculas', MatriculaController::class);
 });
 
 require __DIR__.'/auth.php';

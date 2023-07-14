@@ -17,7 +17,9 @@ class TrabajoController extends Controller
     public function index()
     {
         $cursos = Curso::with('carrera','user')->where('user_id','=',auth()->user()->id)->get();
+        
         $trabajos = Trabajo::with('curso')->get();
+        // $trabajos = Curso::with('trabajos')->where('user_id','=',auth()->user()->id)->get();
         // dd($trabajos);
         return Inertia::render('Trabajos/Index',['trabajos'=>$trabajos,'cursos'=>$cursos]);
     }

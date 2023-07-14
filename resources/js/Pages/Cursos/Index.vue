@@ -52,7 +52,7 @@ const openModal = (op,curso)=>{
         title.value = 'Editar Curso';
         // generar un bucle     ***********************************
         id.value = curso.id;
-        form.nombre = curso.nombre;
+        form.nombre = curso.name;
         form.descripcion = curso.descripcion;
         form.estado = curso.estado;
         form.carrera_id = curso.carrera.id;
@@ -194,7 +194,7 @@ const deleteCur = (id,name) =>{
                                             {{ cur.id }}
                                         </th>
                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{ cur.nombre }}
+                                            {{ cur.name }}
                                         </th>
                                         <td class="px-6 py-4">
                                             {{ cur.estado }}
@@ -203,14 +203,14 @@ const deleteCur = (id,name) =>{
                                             {{ cur.descripcion }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ cur.carrera.nombre }}
+                                            {{ cur.carrera.name }}
                                         </td>
                                         <td class="px-6 py-4">
                                             <div class="flex">
                                                 <button @click="openModal(0,cur)" type="button" class="focus:outline-none mr-1 text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm py-2 px-3 dark:focus:ring-yellow-900">
                                                     <i class="fa-solid fa-edit"></i>
                                                 </button>
-                                                <button @click="deleteCur(cur.id,cur.nombre)" type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm py-2 px-3 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                                                <button @click="deleteCur(cur.id,cur.name)" type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm py-2 px-3 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
                                             </div>

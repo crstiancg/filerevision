@@ -18,5 +18,18 @@ class Matricula extends Pivot
         ->using(Tarea::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
+    public function curso()
+    {
+        return $this->belongsTo(Curso::class);
+    }
+
+    public static $rules=[
+        'user_id'=>'required',
+        'curso_id'=>'required'
+    ];
 }

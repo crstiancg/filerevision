@@ -16,6 +16,7 @@ class MatriculaController extends Controller
      */
     public function index()
     {
+        $data = Curso::with('users')->get();
         $matriculas = Matricula::with('user','curso')->get();
         $cursos = Curso::all();
         $usuarios = User::all();

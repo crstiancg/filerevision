@@ -3,9 +3,6 @@ import MyLayout from '@/Layouts/MyLayout.vue';
 import { Head,useForm } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import { ref } from 'vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import MySelectInput from '@/Components/MyComponents/MySelectInput.vue'
 import Input from '@/Components/MyComponents/Input.vue';
 
 import Swal from 'sweetalert2';
@@ -210,11 +207,7 @@ const deleteCur = (id,name) =>{
                                     <Input label="Descripción" type="text" v-model="form.descripcion" :error="form.errors.descripcion"></Input>
                                 </div>
                                 <div class="p-3">
-                                    <InputLabel for="carre" value="Cursos:"></InputLabel>
-                                    <MySelectInput id="carre" 
-                                    v-model="form.curso_id" :options="cursos" class="mt-1 block w-3/4"
-                                    placeholder="Cursos"></MySelectInput>
-                                    <InputError :message="form.errors.curso_id" class="mt-2"></InputError>
+                                    <Input label="Cursos:" type="select" v-model="form.curso_id" :options="cursos" :error="form.errors.curso_id"/>
                                 </div>
                             </div>
                             <div class="flex justify-center">

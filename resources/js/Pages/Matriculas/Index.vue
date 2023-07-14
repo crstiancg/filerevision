@@ -3,9 +3,6 @@ import MyLayout from '@/Layouts/MyLayout.vue';
 import { Head,useForm } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import { ref } from 'vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import MySelectInput from '@/Components/MyComponents/MySelectInput.vue'
 import Input from '@/Components/MyComponents/Input.vue';
 
 import Swal from 'sweetalert2';
@@ -201,18 +198,10 @@ const deleteCur = (id) =>{
                             <h2 class="p-3 text-lg font.medium text-hray-900 bg-gray-800 text-white">{{ title }}</h2>
                             <div class="grid justify-center">
                                 <div class="p-3">
-                                    <InputLabel for="usu" value="Estudiantes:"></InputLabel>
-                                    <MySelectInput id="usu" 
-                                    v-model="form.user_id" :options="users" class="mt-1 block w-3/4"
-                                    placeholder="Cursos"></MySelectInput>
-                                    <InputError :message="form.errors.user_id" class="mt-2"></InputError>
+                                    <Input label="Estudiantes:" type="select" v-model="form.user_id" :options="users" :error="form.errors.user_id"/>
                                 </div>
                                 <div class="p-3">
-                                    <InputLabel for="cur" value="Cursos:"></InputLabel>
-                                    <MySelectInput id="cur" 
-                                    v-model="form.curso_id" :options="cursos" class="mt-1 block w-3/4"
-                                    placeholder="Cursos"></MySelectInput>
-                                    <InputError :message="form.errors.curso_id" class="mt-2"></InputError>
+                                    <Input label="Cursos:" type="select" v-model="form.curso_id" :options="cursos" :error="form.errors.curso_id"/>
                                 </div>
                             </div>
                             <div class="flex justify-center">

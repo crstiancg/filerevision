@@ -150,6 +150,13 @@ const doubledropdown = ref(false);
                     </MySidebarNavLink>
                 </li>
                 <li>
+                    <MySidebarNavLink :href="route('matriculas.index')" :active="route().current('matriculas.index')">
+                        <i class="fa-solid fa-book text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <!-- <svg aria-hidden="true" class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg> -->
+                        <span class="ml-3">Matriculas</span>
+                    </MySidebarNavLink>
+                </li>
+                <li>
                     <MySidebarNavLink :href="route('trabajos.index')" :active="route().current('trabajos.index')">
                         <i class="fa-solid fa-book text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                         <!-- <svg aria-hidden="true" class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg> -->
@@ -157,10 +164,10 @@ const doubledropdown = ref(false);
                     </MySidebarNavLink>
                 </li>
                 <li>
-                    <MySidebarNavLink :href="route('matriculas.index')" :active="route().current('matriculas.index')">
+                    <MySidebarNavLink :href="route('tareas.index')" :active="route().current('tareas.index')">
                         <i class="fa-solid fa-book text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                         <!-- <svg aria-hidden="true" class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg> -->
-                        <span class="ml-3">Matriculas</span>
+                        <span class="ml-3">Tareas</span>
                     </MySidebarNavLink>
                 </li>
                 <li>

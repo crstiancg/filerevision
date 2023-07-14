@@ -17,4 +17,20 @@ class Tarea extends Pivot
     {
         return $this->hasMany(Revision::class, 'tarea_id','id');
     }
+
+    public function trabajo()
+    {
+        return $this->belongsTo(Trabajo::class);
+    }
+
+    public function matricula()
+    {
+        return $this->belongsTo(Matricula::class);
+    }
+
+    public static $rules=[
+        'trabajo_id' => 'required',
+        'matricula_id'=>'required',
+        'nota'=>'required'
+    ];
 }

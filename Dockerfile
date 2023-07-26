@@ -14,6 +14,7 @@ COPY . .
 
 COPY --from=composer:2.3.5 /usr/bin/composer /usr/bin/composer
 
+
 RUN npm install
 
 ENV PORT=8000

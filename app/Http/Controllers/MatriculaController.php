@@ -18,6 +18,7 @@ class MatriculaController extends Controller
     {
         $data = Curso::with('users')->get();
         $matriculas = Matricula::with('user','curso')->get();
+
         $cursos_ = Curso::select('id','name')->get();
         $usuarios = User::select('id','name')->get();
 
@@ -46,6 +47,7 @@ class MatriculaController extends Controller
      */
     public function store(Request $request)
     {
+
         // $request->validate(Matricula::$rules);
         foreach ($request->cursos as $curso){
             if($curso!==null){

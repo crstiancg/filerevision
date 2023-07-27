@@ -34,12 +34,26 @@
           class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
           {{ row[column.key] }}
         </td>
+        <td class="px-6 py-4">
+          <button @click="editRow(row)">Edit</button>
+          <button @click="deleteRow(row.id)">Delete</button>
+        </td>
       </tr>
     </tbody>
   </table>
 </template>
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, defineEmits } from "vue";
 
-const { data, columns } = defineProps(['data', 'columns']);
+const { data, columns } = defineProps(["data", "columns"]);
+
+const emit = defineEmits(["edit", "delete"]);
+
+const editRow = (row) => {
+  emit("edit", row);
+};
+
+const deleteRow = (rowId) => {
+  emit("delete", rowId);
+};
 </script>

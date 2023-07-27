@@ -130,8 +130,8 @@ const Borrar = (id) =>{
                         <Modal :show="modal" @close="closeModal">
                             <h2 class="p-3 text-lg font.medium text-hray-900 bg-gray-800 text-white">{{ title }}</h2>
                             <div class="grid grid-cols-12 p-4">
-                                <Input :data="form_.titulo" v-model="form.titulo" :error="form.errors.titulo" col="12"></Input>
-                                <Input :data="form_.descripcion" v-model="form.descripcion" :error="form.errors.descripcion" col="12"></Input>
+                                <Input :data="form_.titulo" v-model="form.titulo" :error="form.errors.titulo" col="6"></Input>
+                                <Input :data="form_.descripcion" v-model="form.descripcion" :error="form.errors.descripcion" col="6"></Input>
                                 <Input :data="form_.curso" v-model="form.curso_id" :error="form.errors.curso_id" col="4"></Input>
                             </div>
                             <div class="flex justify-center">

@@ -132,7 +132,8 @@ const Borrar = (id,name) =>{
                             @edit="openModal"
                             @delete="Borrar" />
                             <!-- tabla -->
-                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+
+                            <!-- <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
                                         <th scope="col" class="p-4">
@@ -196,7 +197,9 @@ const Borrar = (id,name) =>{
                                         </td>
                                     </tr>
                                 </tbody>
-                            </table>
+                            </table> -->
+
+                            
                         </div>
                         
                         <!-- modal  -->
@@ -210,13 +213,11 @@ const Borrar = (id,name) =>{
                             </div>
                             <div class="flex justify-center">
                                 <div class="m-6">
-                                    <Button :disabled="form.processing" @click="save" type="green">
-                                        <i class="fa-solid fa-save"></i> Guardar
+                                    <Button :disabled="form.processing" @click="save" type="green"><i class="fa-solid fa-save"></i> Guardar
                                     </Button>
                                 </div>
                                 <div class="m-6">
-                                    <Button :disabled="form.processing" @click="closeModal" type="red">
-                                        <i class="fa-solid fa-ban"></i> Salir
+                                    <Button :disabled="form.processing" @click="closeModal" type="red"><i class="fa-solid fa-ban"></i> Salir
                                     </Button>
                                 </div>
                             </div>

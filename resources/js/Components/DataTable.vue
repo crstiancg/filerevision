@@ -38,8 +38,8 @@
           {{ row[column.key] }}
         </td>
         <td class="px-6 py-4">
-          <Button type="cyan" @click="editRow(row)">Edit</Button>
-          <Button type="red" @click="deleteRow(row.id)">Delete</Button>
+          <Button type="cyan" @click="editRow(row)"><i class="fa-solid fa-edit"></i></Button>
+          <Button type="red" @click="deleteRow(row.id)"><i class="fa-solid fa-trash"></i></Button>
         </td>
       </tr>
     </tbody>

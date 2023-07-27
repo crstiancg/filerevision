@@ -26,15 +26,13 @@ class TrabajoController extends Controller
         $form_ = [
             'titulo'=>['label'=>'Titulo','type'=>'text'],
             'descripcion'=>['label'=>'Descripción','type'=>'text'],
+            'des'=>['label'=>'DESSS','type'=>'text'],
             'curso'=>['label'=>'Cusos','type'=>'select','options'=>$cursos,'optikey'=>'name'],
         ];
-
-
 
         $tableColumns = [
             ['key' => 'id', 'label' => 'ID'],
             ['key' => 'titulo', 'label' => 'Title'],
-            ['key' => 'descripcion', 'label' => 'Description'],
             ['key' => 'curso_id', 'label' => 'ID Curso'],
         ];
 

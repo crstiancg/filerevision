@@ -7,7 +7,7 @@ import { Link } from '@inertiajs/vue3';
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 ">
         <div>
             <Link href="/">
-                <div class="text-4xl font-bold text-indigo-500">Trabajos</div>
+                <div class="text-4xl font-bold text-indigo-500">Trabajos 2</div>
             </Link>
         </div>
 

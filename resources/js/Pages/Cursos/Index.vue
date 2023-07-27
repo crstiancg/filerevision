@@ -4,6 +4,8 @@ import { Head,useForm } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import { ref } from 'vue';
 import Input from '@/Components/MyComponents/Input.vue';
+import Button from '@/Components/MyComponents/Button.vue';
+import DataTable from '@/Components/DataTable.vue';
 
 import Swal from 'sweetalert2';
 
@@ -16,8 +18,8 @@ const props = defineProps({
     cursos: {
         type:Object,
     },
-    carreras:{type:Object},
-    usuario:{type:String},
+    tableColumns:{type:Object},
+    form_:{type:Object},
 });
 
 const form = useForm({
@@ -69,28 +71,10 @@ const save = () =>{
         form.put(route('cursos.update',id.value),{
             onSuccess: ()=>{ok('Curso Actualizado')}
         });
-        // const alerta = Swal.mixin({
-        //     buttonsStyling:true
-        // });
-        // alerta.fire({
-        //     title: '¿Esta seguro de editar el campo?',
-        //     iconHtml: '<i class="fas fa-question"></i>',
-        //     showCancelButton:true,
-        //     confirmButtonText: '<i class="fa-solid fa-check"></i> Si, Editar.',
-        //     cancelButtonText: '<i class="fa-solid fa-ban"></i> Cancelar',
-        // }).then((result)=>{
-        //     if(result.isConfirmed){
-        //         // console.log(id.value);
-        //         form.put(route('employees.update',id.value),{
-        //             onSuccess: ()=>{ok('Empleado Actualizado')}
-        //         });
-        //     }
-        // });
-        closeModal();
     }
 };
 
-const deleteCur = (id,name) =>{
+const Borrar = (id,name) =>{
     // form.delete(route('cursos.destroy',id));
     const alerta = Swal.mixin({
         buttonsStyling:true
@@ -123,20 +107,16 @@ const deleteCur = (id,name) =>{
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="py-2">Docente: {{ usuario }}</div>
+                    <!-- <div class="py-2">Docente: {{ usuario }}</div> -->
+                        <Button @click="openModal(1)" type="blue">
+                            <i class="fa-solid fa-plus-circle"></i>
+                            Agregar
+                        </Button>
                     <div class="py-2">
                         <!-- tabla de datos -->
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                             <!-- accione de tabla -->
                             <div class="flex items-center justify-between p-4 bg-white dark:bg-gray-900">
-                                <div class="flex">
-                                    <div>
-                                        <button @click="openModal(1)" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                            <i class="fa-solid fa-plus-circle"></i>
-                                            Agregar
-                                        </button>
-                                    </div>
-                                </div>
                                 <label for="table-search" class="sr-only">Search</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -147,7 +127,10 @@ const deleteCur = (id,name) =>{
                                     <input type="text" id="table-search-users" class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for users">
                                 </div>
                             </div>
-                            
+                            <!-- Data Table -->
+                            <DataTable :data="cursos" :columns="tableColumns" 
+                            @edit="openModal"
+                            @delete="Borrar" />
                             <!-- tabla -->
                             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -215,34 +198,26 @@ const deleteCur = (id,name) =>{
                                 </tbody>
                             </table>
                         </div>
+                        
                         <!-- modal  -->
                         <Modal :show="modal" @close="closeModal">
                             <h2 class="p-3 text-lg font.medium text-hray-900 bg-gray-800 text-white">{{ title }}</h2>
-                            <div class="grid justify-center">
-                                <!-- stilos en columnas, por componentes -->
-                                <div class="p-3 mt-2">
-                                    <Input label="Nombre" type="text" v-model="form.nombre" :error="form.errors.nombre"></Input>
-                                </div>
-                                <div class="p-3 mt-2">
-                                    <Input label="Estado" type="text" v-model="form.estado" :error="form.errors.estado"></Input>
-                                </div>
-                                <div class="p-3 mt-2">
-                                    <Input label="Descripción" type="text" v-model="form.descripcion" :error="form.errors.descripcion"></Input>
-                                </div>
-                                <div class="p-3">
-                                    <Input label="Carreras:" type="select" v-model="form.carrera_id" :options="carreras" :error="form.errors.carrera_id"/>
-                                </div>
+                            <div class="grid grid-cols-12 p-4">
+                                <Input col="6" :data="form_.nombre" v-model="form.nombre" :error="form.errors.nombre"></Input>
+                                <Input col="6" :data="form_.estado" v-model="form.estado" :error="form.errors.estado"></Input>
+                                <Input col="6" :data="form_.descripcion" v-model="form.descripcion" :error="form.errors.descripcion"></Input>
+                                <Input col="6" :data="form_.carreras" v-model="form.carrera_id" :error="form.errors.carrera_id"/>
                             </div>
                             <div class="flex justify-center">
                                 <div class="m-6">
-                                    <button :disabled="form.processing" @click="save" type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                    <Button :disabled="form.processing" @click="save" type="green">
                                         <i class="fa-solid fa-save"></i> Guardar
-                                    </button>
+                                    </Button>
                                 </div>
                                 <div class="m-6">
-                                    <button :disabled="form.processing" @click="closeModal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                    <Button :disabled="form.processing" @click="closeModal" type="red">
                                         <i class="fa-solid fa-ban"></i> Salir
-                                    </button>
+                                    </Button>
                                 </div>
                             </div>
                         </Modal>

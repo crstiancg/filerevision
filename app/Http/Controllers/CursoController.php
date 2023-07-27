@@ -14,13 +14,29 @@ class CursoController extends Controller
      */
     public function index()
     {
-        $usuario = auth()->user()->name;
-        $cursos = Curso::with('carrera','user')->where('user_id','=',auth()->user()->id)->get();
+        // $usuario = auth()->user()->name;
+        // $cursos = Curso::with('carrera','user')->where('user_id','=',auth()->user()->id)->get();
+        $cursos = Curso::with('carrera','user')->get();
         // dd($usuario);
-        $carre = Carrera::all();
+        $carre = Carrera::select('id','name')->get();
+
+        $form_ = [
+            'nombre'=>['label'=>'Nombre','type'=>'text'],
+            'estado'=>['label'=>'Estado','type'=>'text'],
+            'descripcion'=>['label'=>'Descripción','type'=>'text'],
+            'carreras'=>['label'=>'Carreras','type'=>'select','options'=>$carre,'optikey'=>'name'],
+        ];
+
+        $tableColumns = [
+            ['key' => 'id', 'label' => 'ID'],
+            ['key' => 'name', 'label' => 'Nombre'],
+            ['key' => 'estado', 'label' => 'Estado'],
+            ['key' => 'descripcion', 'label' => 'Descripción'],
+            ['key' => 'carrera_id', 'label' => 'ID Carrera'],
+        ];
 
         // dd($cursos);
-        return Inertia::render('Cursos/Index',['cursos'=>$cursos,'carreras'=>$carre,'usuario'=>$usuario]);
+        return Inertia::render('Cursos/Index',  compact('cursos','tableColumns',"form_"));
     }
 
 

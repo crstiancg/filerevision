@@ -18,19 +18,19 @@ class MatriculaController extends Controller
     {
         $data = Curso::with('users')->get();
         $matriculas = Matricula::with('user','curso')->get();
-        $cursos = Curso::select('id','name')->get();
+        $cursos_ = Curso::select('id','name')->get();
         $usuarios = User::select('id','name')->get();
 
         // dd($usuarios);
         $form_ = [
-            'cursos'=>['label'=>'Cursos','type'=>'select','options'=>$cursos,'optikey'=>'name'],
+            'cursos'=>['label'=>'Cursos','type'=>'select','options'=>$cursos_,'optikey'=>'name'],
             'users'=>['label'=>'Usuarios','type'=>'select','options'=>$usuarios,'optikey'=>'name'],
         ];
 
         $tableColumns = [
             ['key' => 'id', 'label' => 'ID'],
         ];
-        return Inertia::render('Matriculas/Index',compact('matriculas','cursos', 'tableColumns',"form_"));
+        return Inertia::render('Matriculas/Index',compact('matriculas','cursos_', 'tableColumns',"form_"));
     }
 
     /**
@@ -55,7 +55,6 @@ class MatriculaController extends Controller
                 ]);
             }
         }
-        
         return redirect('matriculas');
     }
 

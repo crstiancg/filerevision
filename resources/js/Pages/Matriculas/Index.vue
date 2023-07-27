@@ -17,12 +17,13 @@ const curs = ref([]);
 
 const props = defineProps({
     matriculas: {type:Object,},
-    cursos: {type:Object},
+    cursos_: {type:Object},
     tableColumns:{type:Object},
     form_:{type:Object},
 });
 
 const form = useForm({
+    curso_id:'',
     user_id:'',
     cursos:[],
 });
@@ -201,15 +202,17 @@ const deleteCur = (id) =>{
                         <Modal :show="modal" @close="closeModal">
                             <h2 class="p-3 text-lg font.medium text-hray-900 bg-gray-800 text-white">{{ title }}</h2>
                             <div class="grid grid-cols-2">
-                                <Input col="3" :data="form_.users" v-model="form.user_id" :options="cursos" :error="form.errors.user_id"/>
-                                <!-- {{ form.cursos[2] }} -->
-                                <div v-for="cur,ind in cursos" :key="cur.id" class="p-4 mx-4">
-                                    <div class="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">
-                                        <input v-model="curs[ind]" @change="curs[ind] ? form.cursos[ind]=cur.id : form.cursos[ind]=null;" id="bordered-checkbox-1" type="checkbox" value="" name="bordered-checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600">
-                                        <label for="bordered-checkbox-1" class="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                            {{ cur.name }}</label>
+                                <Input col="3" :data="form_.users" v-model="form.user_id" :error="form.errors.user_id"/>
+                                <template v-if="operation === 1">
+                                    <div v-for="cur,ind in cursos_" :key="cur.id" class="my-2 mx-4">
+                                        <div class="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">
+                                            <input v-model="curs[ind]" @change="curs[ind] ? form.cursos[ind]=cur.id : form.cursos[ind]=null;" id="bordered-checkbox-1" type="checkbox" value="" name="bordered-checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600">
+                                            <label for="bordered-checkbox-1" class="w-full py-4 ml-2 text-sm font-medium text-gray-900">
+                                                {{ cur.name }}</label>
+                                        </div>
                                     </div>
-                                </div>
+                                </template>
+                                <Input v-else col="3" :data="form_.cursos" v-model="form.curso_id" :error="form.errors.curso_id"/>
                             </div>  
                             <div class="flex justify-center">
                                 <div class="m-6">

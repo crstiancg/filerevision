@@ -18,7 +18,6 @@ class MatriculaController extends Controller
     {
         $data = Curso::with('users')->get();
         $matriculas = Matricula::with('user','curso')->get();
-
         $cursos_ = Curso::select('id','name')->get();
         $usuarios = User::select('id','name')->get();
 

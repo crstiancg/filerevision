@@ -4,6 +4,7 @@ import { Head,useForm } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import { ref } from 'vue';
 import Input from '@/Components/MyComponents/Input.vue';
+import Button from '@/Components/MyComponents/Button.vue'
 
 import Swal from 'sweetalert2';
 
@@ -12,15 +13,19 @@ const title = ref('');
 const operation = ref(1);
 const id = ref();
 
+const cur = ref([]);
+
 const props = defineProps({
     matriculas: {type:Object,},
-    cursos:{type:Object},
-    users:{type:Object},
+    cursos: {type:Object},
+    tableColumns:{type:Object},
+    form_:{type:Object},
 });
 
 const form = useForm({
     curso_id:'',
     user_id:'',
+    cursos:[],
 });
 
 const ok = (msj)=>{
@@ -63,7 +68,6 @@ const save = () =>{
         form.put(route('matriculas.update',id.value),{
             onSuccess: ()=>{ok('Matricula Actualizado')}
         });
-        closeModal();
     }
 };
 
@@ -107,10 +111,10 @@ const deleteCur = (id) =>{
                             <div class="flex items-center justify-between p-4 bg-white dark:bg-gray-900">
                                 <div class="flex">
                                     <div>
-                                        <button @click="openModal(1)" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                        <Button @click="openModal(1)" type="blue">
                                             <i class="fa-solid fa-plus-circle"></i>
                                             Agregar
-                                        </button>
+                                        </Button>
                                     </div>
                                 </div>
                                 <label for="table-search" class="sr-only">Search</label>
@@ -180,12 +184,12 @@ const deleteCur = (id) =>{
                                             </td>
                                             <td class="px-6 py-4">
                                                 <div class="flex">
-                                                    <button @click="openModal(0,mat)" type="button" class="focus:outline-none mr-1 text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm py-2 px-3 dark:focus:ring-yellow-900">
+                                                    <Button @click="openModal(0,mat)" type="teal">
                                                         <i class="fa-solid fa-edit"></i>
-                                                    </button>
-                                                    <button @click="deleteCur(mat.id)" type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm py-2 px-3 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                                                    </Button>
+                                                    <Button @click="deleteCur(mat.id)" type="red">
                                                         <i class="fa-solid fa-trash"></i>
-                                                    </button>
+                                                    </Button>
                                                 </div>
                                             </td>
                                         <!-- </template> -->
@@ -196,12 +200,16 @@ const deleteCur = (id) =>{
                         <!-- modal  -->
                         <Modal :show="modal" @close="closeModal">
                             <h2 class="p-3 text-lg font.medium text-hray-900 bg-gray-800 text-white">{{ title }}</h2>
-                            <div class="grid justify-center">
-                                <div class="p-3">
-                                    <Input label="Estudiantes:" type="select" v-model="form.user_id" :options="users" :error="form.errors.user_id"/>
-                                </div>
-                                <div class="p-3">
-                                    <Input label="Cursos:" type="select" v-model="form.curso_id" :options="cursos" :error="form.errors.curso_id"/>
+                            <div class="grid grid-cols-2">
+                                <Input col="3" :data="form_.users" v-model="form.curso_id" :options="cursos" :error="form.errors.curso_id"/>
+                                <!-- {{ form.cursos[2] }} -->
+                                <div v-for="cur,ind in cursos" :key="cur.id" class="p-3">
+                                    <div class="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">
+                                        <input v-model="cur[ind]" @change="cur[ind] ? form.cursos[ind]=cur.id : form.cursos[ind]=null;" id="bordered-checkbox-1" type="checkbox" value="" name="bordered-checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="bordered-checkbox-1" class="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                            {{ cur.name }}</label>
+                                    </div>
+                                    {{ form.cursos }}
                                 </div>
                             </div>
                             <div class="flex justify-center">

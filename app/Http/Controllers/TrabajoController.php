@@ -21,12 +21,15 @@ class TrabajoController extends Controller
         $trabajos = Trabajo::with('curso')->get();
         // $trabajos = Curso::with('trabajos')->where('user_id','=',auth()->user()->id)->get();
         // dd($trabajos);
+            
+
         $form_ = [
             'titulo'=>['label'=>'Titulo','type'=>'text'],
             'descripcion'=>['label'=>'Descripción','type'=>'text'],
-            'descripcion2'=>['label'=>'Descripción2','type'=>'password'],
             'curso'=>['label'=>'Cusos','type'=>'select','options'=>$cursos,'optikey'=>'name'],
         ];
+
+
 
         $tableColumns = [
             ['key' => 'id', 'label' => 'ID'],

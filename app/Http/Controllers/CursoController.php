@@ -31,7 +31,7 @@ class CursoController extends Controller
             ['key' => 'id', 'label' => 'ID'],
             ['key' => 'name', 'label' => 'Nombre'],
             ['key' => 'estado', 'label' => 'Estado'],
-            ['key' => 'descripcion', 'label' => 'Descripción'],
+            // ['key' => 'descripcion', 'label' => 'Descripción'],
             ['key' => 'carrera_id', 'label' => 'ID Carrera'],
         ];
 

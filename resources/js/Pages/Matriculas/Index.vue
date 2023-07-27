@@ -13,7 +13,7 @@ const title = ref('');
 const operation = ref(1);
 const id = ref();
 
-const cur = ref([]);
+const curs = ref([]);
 
 const props = defineProps({
     matriculas: {type:Object,},
@@ -23,7 +23,6 @@ const props = defineProps({
 });
 
 const form = useForm({
-    curso_id:'',
     user_id:'',
     cursos:[],
 });
@@ -55,6 +54,7 @@ const openModal = (op,matricula)=>{
 };
 const closeModal = ()=>{
     modal.value = false;
+    curs.value = [];
     form.reset();
 };
 const save = () =>{
@@ -201,17 +201,16 @@ const deleteCur = (id) =>{
                         <Modal :show="modal" @close="closeModal">
                             <h2 class="p-3 text-lg font.medium text-hray-900 bg-gray-800 text-white">{{ title }}</h2>
                             <div class="grid grid-cols-2">
-                                <Input col="3" :data="form_.users" v-model="form.curso_id" :options="cursos" :error="form.errors.curso_id"/>
+                                <Input col="3" :data="form_.users" v-model="form.user_id" :options="cursos" :error="form.errors.user_id"/>
                                 <!-- {{ form.cursos[2] }} -->
-                                <div v-for="cur,ind in cursos" :key="cur.id" class="p-3">
+                                <div v-for="cur,ind in cursos" :key="cur.id" class="p-4 mx-4">
                                     <div class="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">
-                                        <input v-model="cur[ind]" @change="cur[ind] ? form.cursos[ind]=cur.id : form.cursos[ind]=null;" id="bordered-checkbox-1" type="checkbox" value="" name="bordered-checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <input v-model="curs[ind]" @change="curs[ind] ? form.cursos[ind]=cur.id : form.cursos[ind]=null;" id="bordered-checkbox-1" type="checkbox" value="" name="bordered-checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600">
                                         <label for="bordered-checkbox-1" class="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                             {{ cur.name }}</label>
                                     </div>
-                                    {{ form.cursos }}
                                 </div>
-                            </div>
+                            </div>  
                             <div class="flex justify-center">
                                 <div class="m-6">
                                     <button :disabled="form.processing" @click="save" type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">

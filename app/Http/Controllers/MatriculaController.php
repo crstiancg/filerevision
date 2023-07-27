@@ -46,11 +46,9 @@ class MatriculaController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->cursos);
-        $request->validate(Matricula::$rules);
+        // $request->validate(Matricula::$rules);
         foreach ($request->cursos as $curso){
-            dd($curso);
-            if($curso){
+            if($curso!==null){
                 Matricula::create([
                     'user_id' => $request->user_id,
                     'curso_id' => $curso,

@@ -18,19 +18,12 @@ class MatriculaController extends Controller
     {
         $data = Curso::with('users')->get();
         $matriculas = Matricula::with('user','curso')->get();
-        $cursos = Curso::select('id','name')->get();
-        $usuarios = User::select('id','name')->get();
+        $cursos = Curso::all();
+        $usuarios = User::all();
 
         // dd($usuarios);
-        $form_ = [
-            'cursos'=>['label'=>'Cursos','type'=>'select','options'=>$cursos,'optikey'=>'name'],
-            'users'=>['label'=>'Usuarios','type'=>'select','options'=>$usuarios,'optikey'=>'name'],
-        ];
 
-        $tableColumns = [
-            ['key' => 'id', 'label' => 'ID'],
-        ];
-        return Inertia::render('Matriculas/Index',compact('matriculas','cursos', 'tableColumns',"form_"));
+        return Inertia::render('Matriculas/Index',['matriculas'=>$matriculas,'cursos'=>$cursos,'users'=>$usuarios]);
     }
 
     /**
@@ -46,18 +39,12 @@ class MatriculaController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->cursos);
         $request->validate(Matricula::$rules);
-        foreach ($request->cursos as $curso){
-            dd($curso);
-            if($curso){
-                Matricula::create([
-                    'user_id' => $request->user_id,
-                    'curso_id' => $curso,
-                ]);
-            }
-        }
-        
+        Matricula::create([
+            'user_id' => $request->user_id,
+            'curso_id' => $request->curso_id,
+            ]);
+
         return redirect('matriculas');
     }
 

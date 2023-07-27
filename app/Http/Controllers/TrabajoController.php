@@ -17,15 +17,17 @@ class TrabajoController extends Controller
     public function index()
     {
         // $cursos = Curso::with('carrera','user')->where('user_id','=',auth()->user()->id)->get();
-        $cursos = Curso::with('carrera')->get();
+        $cursos = Curso::select('id','name')->get();
         $trabajos = Trabajo::with('curso')->get();
         // $trabajos = Curso::with('trabajos')->where('user_id','=',auth()->user()->id)->get();
         // dd($trabajos);
-        $selec = [
-            'id'=>['label'=>'id','type'=>'text'],
+        $form_ = [
             'titulo'=>['label'=>'Titulo','type'=>'text'],
-            'descripcion'=>['label'=>'Descripción']
+            'descripcion'=>['label'=>'Descripción','type'=>'text'],
+            'descripcion2'=>['label'=>'Descripción2','type'=>'password'],
+            'curso'=>['label'=>'Cusos','type'=>'select','options'=>$cursos,'optikey'=>'name'],
         ];
+
         $tableColumns = [
             ['key' => 'id', 'label' => 'ID'],
             ['key' => 'titulo', 'label' => 'Title'],
@@ -33,14 +35,7 @@ class TrabajoController extends Controller
             ['key' => 'curso_id', 'label' => 'ID Curso'],
         ];
 
-        return Inertia::render('Trabajos/Index', compact('trabajos', 'cursos', 'tableColumns'));
-
-        #return Inertia::render('Trabajos/Table', compact('trabajos', 'cursos'));
-
-        #return Inertia::render('Trabajos/Table',['trabajos'=>$trabajos]);
-
-        #return Inertia::render('Trabajos/Table');
-
+        return Inertia::render('Trabajos/Index', compact('trabajos', 'tableColumns',"form_"));
     }
 
     /**

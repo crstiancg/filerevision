@@ -4,6 +4,7 @@ import { Head,useForm } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import { ref } from 'vue';
 import Input from '@/Components/MyComponents/Input.vue';
+import Button from '@/Components/MyComponents/Button.vue';
 
 import DataTable from '@/Components/DataTable.vue';
 
@@ -16,8 +17,8 @@ const id = ref();
 
 const props = defineProps({
     trabajos: {type:Object,},
-    cursos:{type:Object},
     tableColumns:{type:Object},
+    form_:{type:Object},
 });
 
 const form = useForm({
@@ -37,19 +38,19 @@ const ok = (msj)=>{
     });
 }
 
-const openModal = (op,trabajo)=>{
+const openModal = (trabajo)=>{
     modal.value = true;
     // nextTick( () => nameInput.value.focus());
-    operation.value = op;
-    if(op==1){
+    operation.value = trabajo[0];
+    if(trabajo[0]==1){
         title.value = 'Crear Trabajo';
     }else{
         title.value = 'Editar Trabajo';
         // generar un bucle     ***********************************
-        id.value = trabajo.id;
-        form.titulo = trabajo.titulo;
-        form.descripcion = trabajo.descripcion;
-        form.curso_id = trabajo.curso.id;
+        id.value = trabajo[1].id;
+        form.titulo = trabajo[1].titulo;
+        form.descripcion = trabajo[1].descripcion;
+        form.curso_id = trabajo[1].curso.id;
     }
 };
 const closeModal = ()=>{
@@ -67,11 +68,10 @@ const save = () =>{
         form.put(route('trabajos.update',id.value),{
             onSuccess: ()=>{ok('Trabajo Actualizado')}
         });
-        closeModal();
     }
 };
 
-const deleteCur = (id,name) =>{
+const Borrar = (id) =>{
     // form.delete(route('cursos.destroy',id));
     const alerta = Swal.mixin({
         buttonsStyling:true
@@ -100,15 +100,11 @@ const deleteCur = (id,name) =>{
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Trabajos</h2>
         </template>
-
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="py-2">
-                        <button @click="openModal(1)" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                            <i class="fa-solid fa-plus-circle"></i>
-                            Agregar
-                        </button>
+                        <Button type="blue" @click="openModal([1,null])"><i class="fa-solid fa-plus-circle"></i> Agregar</Button>
                         <!-- tabla de datos -->
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                             <!-- accione de tabla -->
@@ -125,51 +121,17 @@ const deleteCur = (id,name) =>{
                                 </div>
                             </div>
 
-                            <DataTable :data="trabajos" :columns="tableColumns"></DataTable>
+                            <DataTable :data="trabajos" :columns="tableColumns" 
+                                @edit="openModal"
+                                @delete="Borrar" ></DataTable>
                         </div>
                         <!-- modal  -->
                         <Modal :show="modal" @close="closeModal">
                             <h2 class="p-3 text-lg font.medium text-hray-900 bg-gray-800 text-white">{{ title }}</h2>
-                            <div class="grid grid-cols-12 justify-center">
-                                <div class="p-3 mt-2">
-                                    <Input label="Titulo" type="text" v-model="form.titulo" :error="form.errors.titulo"></Input>
-                                </div>
-                                <div class="p-3 mt-2">
-                                    <Input label="Descripción" type="text" v-model="form.descripcion" :error="form.errors.descripcion" col="6"></Input>
-                                </div>
-                                <div class="p-3 mt-2">
-                                    <Input label="Descripción" type="text" v-model="form.descripcion" :error="form.errors.descripcion"></Input>
-                                </div>
-                                <div class="p-3 mt-2">
-                                    <Input label="Descripción" type="text" v-model="form.descripcion" :error="form.errors.descripcion"></Input>
-                                </div>
-                                <div class="p-3 mt-2">
-                                    <Input label="Descripción" type="text" v-model="form.descripcion" :error="form.errors.descripcion"></Input>
-                                </div>
-                                <div class="p-3 mt-2">
-                                    <Input label="Descripción" type="text" v-model="form.descripcion" :error="form.errors.descripcion"></Input>
-                                </div>
-                                <div class="p-3 mt-2">
-                                    <Input label="Descripción" type="text" v-model="form.descripcion" :error="form.errors.descripcion"></Input>
-                                </div>
-                                <div class="p-3 mt-2">
-                                    <Input label="Descripción" type="text" v-model="form.descripcion" :error="form.errors.descripcion"></Input>
-                                </div>
-                                <div class="p-3 mt-2">
-                                    <Input label="Descripción" type="text" v-model="form.descripcion" :error="form.errors.descripcion"></Input>
-                                </div>
-                                <div class="p-3 mt-2">
-                                    <Input label="Descripción" type="text" v-model="form.descripcion" :error="form.errors.descripcion"></Input>
-                                </div>
-                                <div class="p-3 mt-2">
-                                    <Input label="Descripción" type="text" v-model="form.descripcion" :error="form.errors.descripcion"></Input>
-                                </div>
-                                <div class="p-3 mt-2">
-                                    <Input label="Descripción" type="text" v-model="form.descripcion" :error="form.errors.descripcion"></Input>
-                                </div>
-                                <div class="p-3">
-                                    <Input label="Cursos:" type="select" v-model="form.curso_id" :options="cursos" opt="name" :error="form.errors.curso_id"/>
-                                </div>
+                            <div class="grid grid-cols-12 p-4">
+                                <Input :data="form_.titulo" v-model="form.titulo" :error="form.errors.titulo" col="12"></Input>
+                                <Input :data="form_.descripcion" v-model="form.descripcion" :error="form.errors.descripcion" col="12"></Input>
+                                <Input :data="form_.curso" v-model="form.curso_id" :error="form.errors.curso_id" col="4"></Input>
                             </div>
                             <div class="flex justify-center">
                                 <div class="m-6">

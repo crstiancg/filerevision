@@ -24,6 +24,9 @@
           v-for="column in columns" :key="column.key" >
           {{ column.label }}
         </th>
+        <th>
+          Action
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -35,8 +38,8 @@
           {{ row[column.key] }}
         </td>
         <td class="px-6 py-4">
-          <button @click="editRow(row)">Edit</button>
-          <button @click="deleteRow(row.id)">Delete</button>
+          <Button type="cyan" @click="editRow(row)">Edit</Button>
+          <Button type="red" @click="deleteRow(row.id)">Delete</Button>
         </td>
       </tr>
     </tbody>
@@ -44,13 +47,14 @@
 </template>
 <script setup>
 import { defineProps, defineEmits } from "vue";
+import Button from "./MyComponents/Button.vue";
 
 const { data, columns } = defineProps(["data", "columns"]);
 
 const emit = defineEmits(["edit", "delete"]);
 
 const editRow = (row) => {
-  emit("edit", row);
+  emit("edit", [0,row]);
 };
 
 const deleteRow = (rowId) => {

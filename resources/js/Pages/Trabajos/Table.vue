@@ -20,16 +20,11 @@ const { trabajos, tableColumns } = defineProps(["trabajos", "tableColumns"]);
 console.log(trabajos);
 
 const editRow = (row) => {
-  console.log("Edit row:", row);
+  console.log("Edit row:", row[0],row[1].titulo);
 };
 
 const deleteRow = (rowId) => {
 console.log("Delete row with ID:", rowId);
-  form.delete(route("trabajos.destroy", rowId), {
-    onSuccess: () => {
-      ok("Curso eliminado");
-    },
-  });
-
+  form.delete(route("trabajos.destroy", rowId));
 };
 </script>

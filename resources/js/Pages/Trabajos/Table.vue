@@ -10,4 +10,3 @@ import DataTable from '@/Components/DataTable.vue';
 
 const { trabajos, tableColumns } = defineProps(['trabajos', 'tableColumns']);
 </script>
-

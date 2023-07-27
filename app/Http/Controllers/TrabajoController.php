@@ -16,18 +16,24 @@ class TrabajoController extends Controller
      */
     public function index()
     {
-        $cursos = Curso::with('carrera','user')->where('user_id','=',auth()->user()->id)->get();
-
+        // $cursos = Curso::with('carrera','user')->where('user_id','=',auth()->user()->id)->get();
+        $cursos = Curso::with('carrera')->get();
         $trabajos = Trabajo::with('curso')->get();
         // $trabajos = Curso::with('trabajos')->where('user_id','=',auth()->user()->id)->get();
         // dd($trabajos);
+        $selec = [
+            'id'=>['label'=>'id','type'=>'text'],
+            'titulo'=>['label'=>'Titulo','type'=>'text'],
+            'descripcion'=>['label'=>'Descripción']
+        ];
         $tableColumns = [
             ['key' => 'id', 'label' => 'ID'],
             ['key' => 'titulo', 'label' => 'Title'],
             ['key' => 'descripcion', 'label' => 'Description'],
+            ['key' => 'curso_id', 'label' => 'ID Curso'],
         ];
 
-        return Inertia::render('Trabajos/Table', compact('trabajos', 'cursos', 'tableColumns'));
+        return Inertia::render('Trabajos/Index', compact('trabajos', 'cursos', 'tableColumns'));
 
         #return Inertia::render('Trabajos/Table', compact('trabajos', 'cursos'));
 

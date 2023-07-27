@@ -17,32 +17,21 @@
   </table>  -->
   <!-- tabla -->
   <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-    <thead
-      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-    >
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
       <tr>
-        <th
-          scope="col"
+        <th scope="col"
           class="px-6 py-3"
-          v-for="column in columns"
-          :key="column.key"
-        >
+          v-for="column in columns" :key="column.key" >
           {{ column.label }}
         </th>
       </tr>
     </thead>
     <tbody>
-      <tr
-        v-for="row in data"
-        :key="row.id"
-        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-      >
-        <td
-          v-for="column in columns"
-          :key="column.key"
+      <tr v-for="row in data" :key="row.id"
+        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+        <td v-for="column in columns" :key="column.key"
           scope="row"
-          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-        >
+          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
           {{ row[column.key] }}
         </td>
       </tr>
